@@ -1,7 +1,8 @@
 import json
+from flask import Flask, Response, request, jsonify
 from web3 import Web3
 from solc import compile_files, link_code, compile_source
-
+from models import db,app,Player
 
 w3 = Web3(Web3.HTTPProvider("http://127.0.0.1:8545"))
 
@@ -30,3 +31,19 @@ with open('data.json', 'w') as outfile:
         "contract_address": deploy_contract(game_contract)
     }
     json.dump(data, outfile, indent=4, sort_keys=True)
+
+
+###########################
+# ROUTES
+###########################
+
+@app.before_first_request
+def initialize():
+    db.create_all()
+
+@app.route("/ttt/<address>")
+def add_to_database(address):
+    players = Player.query.all()
+    if(len(players)%2==0):
+        pass
+    player = Player(address=address)
