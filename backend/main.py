@@ -4,6 +4,7 @@ from web3 import Web3
 from solc import compile_files, link_code, compile_source
 from models import db,app,Player
 
+
 w3 = Web3(Web3.HTTPProvider("http://127.0.0.1:8545"))
 
 def deploy_contract(contract_interface):
@@ -54,7 +55,7 @@ def add_to_database(address):
     player = Player(address=address,game_contract=gc)
     db.session.add(player)
     db.session.commit()
-    return Response(json.dumps({'address':gc}), status = 200, mimetype = 'application/json')
+    return Response(json.dumps({'address':gc,'abi':game_contract['abi']}), status = 200, mimetype = 'application/json')
 
 if __name__ == "__main__":
-    app.run(port=8000,debug=True)
+    app.run(port=8000,debug=True,host="0.0.0.0")
