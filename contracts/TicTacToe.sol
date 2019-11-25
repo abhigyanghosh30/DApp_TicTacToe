@@ -14,6 +14,8 @@ contract Tic {
     enum Board { Empty, X, O}
     Board[3][3] board;
     
+    event boardUpdated(uint8 x,uint8 y);
+    
     constructor() public  {
         // require(msg.value==1 ether);
         // p1 = msg.sender;
@@ -33,7 +35,6 @@ contract Tic {
         
     }
     
-    event boardUpdated(uint8 x,uint8 y);
 
     function getCurrentTime() public view returns(uint){
         return now;

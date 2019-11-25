@@ -25,7 +25,7 @@ class App extends Component {
     .then(res=>res.json())
     .then((res)=>{
       console.log(res);
-      const web3 = new Web3("http://localhost:8545");
+      const web3 = new Web3("ws://localhost:8545");
       const contract = new web3.eth.Contract(res["abi"],res["address"]);
       sessionStorage.setItem('address',res["address"]);
       sessionStorage.setItem('abi',JSON.stringify(res["abi"]));
@@ -39,7 +39,7 @@ class App extends Component {
   }
 
   async startGame(){
-    const web3 = new Web3("http://localhost:8545");
+    const web3 = new Web3("ws://localhost:8545");
     let abi = JSON.parse(sessionStorage.getItem('abi'));
     let address = sessionStorage.getItem('address');
     let contract = new web3.eth.Contract(abi,address);
@@ -48,7 +48,7 @@ class App extends Component {
   }
 
   async getAccount(){
-    const web3 = new Web3("http://localhost:8545");
+    const web3 = new Web3("ws://localhost:8545");
     const accounts = await web3.eth.getAccounts()
     const accountnumber = Math.floor(Math.random()*10);
     sessionStorage.setItem('account',accounts[accountnumber]);
