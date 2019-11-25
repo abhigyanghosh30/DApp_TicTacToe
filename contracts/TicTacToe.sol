@@ -32,6 +32,8 @@ contract Tic {
         }
         
     }
+    
+    event boardUpdated(uint8 x,uint8 y);
 
     function getCurrentTime() public view returns(uint){
         return now;
@@ -66,9 +68,9 @@ contract Tic {
         require(owner!= msg.sender);
         require( msg.value == 4 ether);
         require(cm==0);
-        if(p1==address(0x0))
+        if(p1==0x0)
             p1 = msg.sender;
-        else if(p2==address(0x0))
+        else if(p2==0x0)
         {
             require(p1!=msg.sender);
             p2 = msg.sender;
@@ -150,6 +152,7 @@ contract Tic {
         require(board[x][y]==Board.Empty);
         // require(!over());
         board[x][y] = player();
+        emit boardUpdated(x, y);
         cm+=1;
         timecounter = now + 10 minutes;
         

@@ -1,22 +1,40 @@
 import React,{Component} from 'react';
+import Web3 from 'web3';
 import './Board.css';
 
 class Board extends Component {
     constructor(){
         super();
         this.handleSubmit = this.handleSubmit.bind(this);
+        const web3 = new Web3("http://localhost:8545");
+        let abi = JSON.parse(sessionStorage.getItem('abi'));
+        let address = sessionStorage.getItem('address');
+        let contract = new web3.eth.Contract(abi,address);
+        console.log(contract.events.boardUpdated);
+        contract.events.boardUpdated(function(error, event){ console.log(event); })
+        .on("connected", function(subscriptionId){
+            console.log(subscriptionId);
+        })
+        .on('data', function(event){
+            console.log(event); // same results as the optional callback above
+        });
     }
 
     handleSubmit(event){
         event.preventDefault();
+        const web3 = new Web3("http://localhost:8545");
         console.log(event.target.id);
-        this.props.appstate.contract.methods.printPlayers().call({from: this.props.appstate.account})
+        let account = sessionStorage.getItem('account');
+        let abi = JSON.parse(sessionStorage.getItem('abi'));
+        let address = sessionStorage.getItem('address');
+        let contract = new web3.eth.Contract(abi,address);
+        contract.methods.printPlayers().call({from: account})
         .then((res)=>{
             console.log(res);
         });
-        this.props.appstate.contract.methods.PlayerMoves(event.target.id).send({from: this.props.appstate.account})
+        contract.methods.Move(Math.floor(event.target.id/3),event.target.id%3).send({from: sessionStorage.getItem('account')})
         .then(()=>{
-            this.props.appstate.contract.methods.tostring(event.target.id/3,event.target.id%3).call({from: this.props.appstate.account})
+            contract.methods.tostring(0,0).call({from: sessionStorage.getItem('account')})
             .then((res)=>{
                 console.log(res);
             })
@@ -36,14 +54,14 @@ class Board extends Component {
                         <td onClick={this.handleSubmit} id="2"></td>
                     </tr>
                     <tr>
-                        <td className="hori" id="3"></td>
-                        <td className="vert hori" id="4"></td>
-                        <td className="hori" id="5"></td>
+                        <td onClick={this.handleSubmit} className="hori" id="3"></td>
+                        <td onClick={this.handleSubmit} className="vert hori" id="4"></td>
+                        <td onClick={this.handleSubmit} className="hori" id="5"></td>
                     </tr>
                     <tr>
-                        <td id="6"></td>
-                        <td id="7" className="vert"></td>
-                        <td id="8"></td>
+                        <td onClick={this.handleSubmit} id="6"></td>
+                        <td onClick={this.handleSubmit} id="7" className="vert"></td>
+                        <td onClick={this.handleSubmit} id="8"></td>
                     </tr>
                 </tbody>
             </table>
