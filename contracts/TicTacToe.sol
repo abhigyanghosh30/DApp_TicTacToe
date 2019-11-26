@@ -15,8 +15,9 @@ contract Tic {
     Board[3][3] board;
     
     event boardUpdated(uint8 x,uint8 y);
-    event gameOver();
-
+    event gameOver(string message);
+    event newGameStarted();
+    
     constructor() public  {
         // require(msg.value==1 ether);
         // p1 = msg.sender;
@@ -95,7 +96,7 @@ contract Tic {
             }
         }
         timecounter = now + 10 minutes;
-        
+        emit newGameStarted();
     }
     
     //Printing the board
@@ -146,7 +147,7 @@ contract Tic {
     
     function Move(uint8 x, uint8 y) public
     {
-        require(cm<9);
+        // require(cm<9);
         require(InBounds(x,y));
         require(!over());
         require(turn()==msg.sender);
@@ -160,7 +161,7 @@ contract Tic {
         
         if(over()){
             declareWinner();
-            emit gameOver();
+            emit gameOver("Game Over");
         }
 
         //return (true,cm);

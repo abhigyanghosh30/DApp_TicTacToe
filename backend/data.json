@@ -344,10 +344,22 @@
         },
         {
             "anonymous": false,
-            "inputs": [],
+            "inputs": [
+                {
+                    "indexed": false,
+                    "name": "message",
+                    "type": "string"
+                }
+            ],
             "name": "gameOver",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [],
+            "name": "newGameStarted",
             "type": "event"
         }
     ],
-    "contract_address": "0xFBCb5866c568304Babc60222B310767baF0198B6"
+    "contract_address": "0x6EAfb09f89885401d0C4223745db7F19a8d5F640"
 }

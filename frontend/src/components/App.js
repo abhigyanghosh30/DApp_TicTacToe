@@ -16,7 +16,7 @@ class App extends Component {
   }
 
   async getNewContract() {
-    fetch("http://10.2.135.44:8000/ttt/"+sessionStorage.getItem('account'),{
+    fetch("http://127.0.0.1:8000/ttt/"+sessionStorage.getItem('account'),{
       method:"GET",
       headers: {
         "Access-Control-Allow-Origin":"*"
@@ -25,11 +25,8 @@ class App extends Component {
     .then(res=>res.json())
     .then((res)=>{
       console.log(res);
-      const web3 = new Web3("ws://10.2.135.44:8545");
-      const contract = new web3.eth.Contract(res["abi"],res["address"]);
       sessionStorage.setItem('address',res["address"]);
       sessionStorage.setItem('abi',JSON.stringify(res["abi"]));
-      sessionStorage.setItem('contract',JSON.stringify(contract));
       var state = this.state;
       state['address'] = res["address"];
       this.setState(state);
@@ -39,7 +36,7 @@ class App extends Component {
   }
 
   async startGame(){
-    const web3 = new Web3("ws://10.2.135.44:8545");
+    const web3 = new Web3("ws://127.0.0.1:8545");
     let abi = JSON.parse(sessionStorage.getItem('abi'));
     let address = sessionStorage.getItem('address');
     let contract = new web3.eth.Contract(abi,address);
@@ -48,7 +45,7 @@ class App extends Component {
   }
 
   async getAccount(){
-    const web3 = new Web3("ws://10.2.135.44:8545");
+    const web3 = new Web3("ws://127.0.0.1:8545");
     const accounts = await web3.eth.getAccounts()
     const accountnumber = Math.floor(Math.random()*9+1);
     sessionStorage.setItem('account',accounts[accountnumber]);
