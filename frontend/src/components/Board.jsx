@@ -43,6 +43,14 @@ class Board extends Component {
             var state = this.state;
             state.over = true;
             this.setState(state);
+            contract.methods.games.call()
+            .then((res)=>{
+                if(res===3)
+                {
+                    sessionStorage.removeItem('address');
+                    sessionStorage.removeItem('abi');
+                }
+            });
             
         });
         contract.events.newGameStarted((error,event)=>{ console.log(event);})

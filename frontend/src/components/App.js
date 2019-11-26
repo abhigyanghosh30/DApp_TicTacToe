@@ -67,22 +67,6 @@ class App extends Component {
     this.state = { account: '' }
     this.getAccount = this.getAccount.bind(this);
     this.getNewContract = this.getNewContract.bind(this);
-
-    const web3 = new Web3("ws://127.0.0.1:8545");
-    let abi = JSON.parse(sessionStorage.getItem('abi'));
-    let address = sessionStorage.getItem('address');
-    let contract = new web3.eth.Contract(abi,address);
-    contract.events.gameOver((error,event)=>{ console.log(event);})
-    .on('data',(event)=>{
-      contract.methods.games.call()
-      .then((res)=>{
-          if(res===3)
-          {
-            sessionStorage.removeItem('address');
-            sessionStorage.removeItem('abi');
-          }
-      });
-    });
   }
 
   render() {
