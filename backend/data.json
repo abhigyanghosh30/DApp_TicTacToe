@@ -341,7 +341,13 @@
             ],
             "name": "boardUpdated",
             "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [],
+            "name": "gameOver",
+            "type": "event"
         }
     ],
-    "contract_address": "0xECbB08625b8A523A789745bf6224cC983B7e5016"
+    "contract_address": "0xFBCb5866c568304Babc60222B310767baF0198B6"
 }

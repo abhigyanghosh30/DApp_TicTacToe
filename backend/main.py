@@ -5,14 +5,14 @@ from solc import compile_files, link_code, compile_source
 from models import db,app,Player
 
 
-w3 = Web3(Web3.HTTPProvider("http://127.0.0.1:8545"))
+w3 = Web3(Web3.HTTPProvider("http://10.2.135.44:8545"))
 
 def deploy_contract(contract_interface):
     contract = w3.eth.contract(
         abi=contract_interface['abi'],
         bytecode=contract_interface['bin']
     )
-    tx_hash =contract.constructor().transact(transaction={'from':w3.eth.accounts[2]})
+    tx_hash =contract.constructor().transact(transaction={'from':w3.eth.accounts[0]})
     tx_receipt = w3.eth.getTransactionReceipt(tx_hash)
     return tx_receipt['contractAddress']
 
@@ -58,4 +58,4 @@ def add_to_database(address):
     return Response(json.dumps({'address':gc,'abi':game_contract['abi']}), status = 200, mimetype = 'application/json')
 
 if __name__ == "__main__":
-    app.run(port=8000,debug=True,host="0.0.0.0")
+    app.run(port=8000,debug=True,host="10.2.135.44")

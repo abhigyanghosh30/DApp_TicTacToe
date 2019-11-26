@@ -15,7 +15,8 @@ contract Tic {
     Board[3][3] board;
     
     event boardUpdated(uint8 x,uint8 y);
-    
+    event gameOver();
+
     constructor() public  {
         // require(msg.value==1 ether);
         // p1 = msg.sender;
@@ -157,8 +158,10 @@ contract Tic {
         cm+=1;
         timecounter = now + 10 minutes;
         
-        if(over())
+        if(over()){
             declareWinner();
+            emit gameOver();
+        }
 
         //return (true,cm);
     
