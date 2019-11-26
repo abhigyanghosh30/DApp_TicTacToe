@@ -359,7 +359,13 @@
             "inputs": [],
             "name": "newGameStarted",
             "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [],
+            "name": "playerJoined",
+            "type": "event"
         }
     ],
-    "contract_address": "0x6EAfb09f89885401d0C4223745db7F19a8d5F640"
+    "contract_address": "0x5b23372d3e33a06b7118881A90553B5446611de5"
 }

@@ -5,18 +5,29 @@ import './Board.css';
 class Board extends Component {
     constructor(){
         super();
-        this.state = {board:[' ',' ',' ',' ',' ',' ',' ',' ',' '],over:false};
+        this.state = {board:[' ',' ',' ',' ',' ',' ',' ',' ',' '],over:false,player2:false,turn:''};
         
         this.handleSubmit = this.handleSubmit.bind(this);
         this.loadContractBoard = this.loadContractBoard.bind(this);
         this.startNewGame = this.startNewGame.bind(this);
-        
+        this.setTurn = this.setTurn.bind(this);
+
         const web3 = new Web3("ws://127.0.0.1:8545");
         let abi = JSON.parse(sessionStorage.getItem('abi'));
         let address = sessionStorage.getItem('address');
         let contract = new web3.eth.Contract(abi,address);
+        contract.methods.printPlayers().call()
+        .then((res)=>{
+            console.log(res);
+            if(res[1]!=="0x0000000000000000000000000000000000000000"){
+                var temp = this.state;
+                temp.player2 = true;
+                this.setState(temp);
+                this.setTurn();
+            }
+        });
         console.log(contract.events.boardUpdated);
-        contract.events.boardUpdated(function(error, event){ console.log(event); })
+        contract.events.boardUpdated((error, event)=>{ this.setTurn();console.log(event); })
         .on('data', function(event){
             let x = parseInt(event.returnValues['x']);
             let y = parseInt(event.returnValues['y']);
@@ -32,14 +43,27 @@ class Board extends Component {
             var state = this.state;
             state.over = true;
             this.setState(state);
-        })
+            
+        });
         contract.events.newGameStarted((error,event)=>{ console.log(event);})
         .on('data',(event)=>{
             var state = this.state;
             state.over = false;
             this.setState(state);
             this.loadContractBoard();
-        })
+            this.setTurn();
+        });
+        contract.events.playerJoined((error,event)=>{ console.log(event);})
+        .on('data',()=>{
+            contract.methods.printPlayers().call()
+            .then((res)=>{
+                console.log(res);
+                var temp = this.state;
+                temp.player2 = true;
+                this.setState(temp);
+                this.setTurn();
+            });
+        });
     }
 
     loadContractBoard(){
@@ -95,22 +119,60 @@ class Board extends Component {
         this.setState(state);
     }
 
+    setTurn(){
+        const web3 = new Web3("ws://127.0.0.1:8545");
+        let abi = JSON.parse(sessionStorage.getItem('abi'));
+        let address = sessionStorage.getItem('address');
+        let contract = new web3.eth.Contract(abi,address);
+        contract.methods.turn().call()
+        .then((res)=>{
+            var temp = this.state;
+            temp.turn = res;
+            this.setState(temp);
+        });
+    }
 
     componentDidMount(){
         console.log(this.props.appstate);
         if(this.props.appstate.address){
             this.loadContractBoard();
         }
+        const web3 = new Web3("ws://127.0.0.1:8545");
+        let abi = JSON.parse(sessionStorage.getItem('abi'));
+        let address = sessionStorage.getItem('address');
+        let contract = new web3.eth.Contract(abi,address);
+        contract.methods.printPlayers().call()
+        .then((res)=>{
+            if(res[1]!=="0x0000000000000000000000000000000000000000"){
+                var temp = this.state;
+                temp.player2 = true;
+                this.setState(temp);
+            }
+        });
     }
+
+    
 
 
     render() {
+        
+        if(!this.state.player2){
+            return(<p>Waiting for player 2 to join</p>)
+        }
         if(this.state.over){
             return(<button className="btn btn-primary" onClick={this.startNewGame}>Start New Game</button>)
         }
         else{
             return (
                 <table>
+                    <thead>
+                        <tr>
+                            <td colSpan="3">Turn: {this.state.turn}</td>
+                        </tr>
+                        <tr>
+                            <td colSpan="3">Your address: {sessionStorage.getItem('account')}</td>
+                        </tr>
+                    </thead>
                     <tbody>
                         <tr>
                             <td onClick={this.handleSubmit} id="0">{this.state.board[0]}</td>

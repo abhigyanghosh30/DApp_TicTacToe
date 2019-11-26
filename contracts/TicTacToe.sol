@@ -17,7 +17,8 @@ contract Tic {
     event boardUpdated(uint8 x,uint8 y);
     event gameOver(string message);
     event newGameStarted();
-    
+    event playerJoined();
+
     constructor() public  {
         // require(msg.value==1 ether);
         // p1 = msg.sender;
@@ -78,6 +79,7 @@ contract Tic {
             require(p1!=msg.sender);
             p2 = msg.sender;
             timecounter = now + 10 minutes;
+            emit playerJoined();
         }
     }
     

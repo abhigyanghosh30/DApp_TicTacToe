@@ -45,13 +45,21 @@ class App extends Component {
   }
 
   async getAccount(){
-    const web3 = new Web3("ws://127.0.0.1:8545");
-    const accounts = await web3.eth.getAccounts()
-    const accountnumber = Math.floor(Math.random()*9+1);
-    sessionStorage.setItem('account',accounts[accountnumber]);
-    var state = this.state;
-    state["account"] = accounts[accountnumber];
-    this.setState(state);
+    if(Web3.currentProvider){
+      const web3 = new Web3(Web3.currentProvider);
+      const accounts = await web3.eth.getAccounts();
+      sessionStorage.setItem('account',accounts[0]);
+      this.setState({account:accounts[0]});
+    }
+    else{
+      const web3 = new Web3("ws://127.0.0.1:8545");
+      const accounts = await web3.eth.getAccounts()
+      const accountnumber = Math.floor(Math.random()*9+1);
+      sessionStorage.setItem('account',accounts[accountnumber]);
+      var state = this.state;
+      state["account"] = accounts[accountnumber];
+      this.setState(state);
+    }
   }
 
   constructor(props) {
@@ -59,6 +67,22 @@ class App extends Component {
     this.state = { account: '' }
     this.getAccount = this.getAccount.bind(this);
     this.getNewContract = this.getNewContract.bind(this);
+
+    const web3 = new Web3("ws://127.0.0.1:8545");
+    let abi = JSON.parse(sessionStorage.getItem('abi'));
+    let address = sessionStorage.getItem('address');
+    let contract = new web3.eth.Contract(abi,address);
+    contract.events.gameOver((error,event)=>{ console.log(event);})
+    .on('data',(event)=>{
+      contract.methods.games.call()
+      .then((res)=>{
+          if(res===3)
+          {
+            sessionStorage.removeItem('address');
+            sessionStorage.removeItem('abi');
+          }
+      });
+    });
   }
 
   render() {
