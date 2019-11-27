@@ -116,7 +116,7 @@ class Board extends Component {
 
     startNewGame(event){
         event.preventDefault();
-        const web3 = new Web3("ws://127.0.0.1:8545");
+        const web3 = new Web3("https://127.0.0.1:8545");
         console.log(event.target.id);
         let abi = JSON.parse(sessionStorage.getItem('abi'));
         let address = sessionStorage.getItem('address');
