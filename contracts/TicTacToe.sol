@@ -51,6 +51,10 @@ contract Tic {
         return(p1,p2);
     }
     
+    function getGames() public view returns(uint){
+        return games;
+    }
+
     function turn() public view returns(address) {
         if(games == 0 || games == 1)
         {

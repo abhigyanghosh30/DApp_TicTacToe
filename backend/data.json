@@ -311,6 +311,20 @@
             "type": "function"
         },
         {
+            "constant": true,
+            "inputs": [],
+            "name": "getGames",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
             "constant": false,
             "inputs": [],
             "name": "joinGame",
@@ -367,5 +381,5 @@
             "type": "event"
         }
     ],
-    "contract_address": "0x22da1Cf27B2DDCbf6379424f05FBE5C6b74B3129"
+    "contract_address": "0xF49eDf395029741edb8b756571e75C5D4afC75ee"
 }

@@ -23,7 +23,8 @@ class App extends Component {
     this.setState(state);
   }
 
-  async getNewContract() {
+  async getNewContract(event) {
+    event.preventDefault();
     fetch("http://127.0.0.1:8000/ttt/"+sessionStorage.getItem('account'),{
       method:"GET",
       headers: {
@@ -43,7 +44,7 @@ class App extends Component {
   }
 
   async startGame(){
-    const web3 = new Web3("https://127.0.0.1:8545");
+    const web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
     let abi = JSON.parse(sessionStorage.getItem('abi'));
     let address = sessionStorage.getItem('address');
     let contract = new web3.eth.Contract(abi,address);
@@ -57,8 +58,6 @@ class App extends Component {
     const accountnumber = Math.floor(Math.random()*9+1);
     sessionStorage.setItem('account',accounts[accountnumber]);
     var state = this.state;
-    sessionStorage.setItem('account',accounts[0]);
-    this.setState({account:accounts[0]});
     state["account"] = accounts[accountnumber];
     this.setState(state);
   }

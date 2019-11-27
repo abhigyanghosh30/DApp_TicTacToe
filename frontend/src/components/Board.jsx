@@ -43,9 +43,11 @@ class Board extends Component {
             var state = this.state;
             state.over = true;
             this.setState(state);
-            contract.methods.games.call()
+            contract.methods.getGames().call()
             .then((res)=>{
-                if(res===3)
+                console.log(res);
+                console.log(typeof(res));
+                if(parseInt(res)===3)
                 {
                     sessionStorage.removeItem('address');
                     sessionStorage.removeItem('abi');
@@ -116,7 +118,7 @@ class Board extends Component {
 
     startNewGame(event){
         event.preventDefault();
-        const web3 = new Web3("https://127.0.0.1:8545");
+        const web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
         console.log(event.target.id);
         let abi = JSON.parse(sessionStorage.getItem('abi'));
         let address = sessionStorage.getItem('address');
