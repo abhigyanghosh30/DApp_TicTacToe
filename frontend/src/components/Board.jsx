@@ -185,19 +185,55 @@ class Board extends Component {
                     </thead>
                     <tbody>
                         <tr>
-                            <td onClick={this.handleSubmit} id="0">{this.state.board[0]}</td>
-                            <td onClick={this.handleSubmit} className="vert" id="1">{this.state.board[1]}</td>
-                            <td onClick={this.handleSubmit} id="2">{this.state.board[2]}</td>
+                            <td onClick={this.handleSubmit} id="0">
+                                <h1>
+                                    {this.state.board[0]}
+                                </h1>
+                            </td>
+                            <td onClick={this.handleSubmit} className="vert" id="1">
+                                <h1>
+                                    {this.state.board[1]}
+                                </h1>
+                            </td>
+                            <td onClick={this.handleSubmit} id="2">
+                                <h1>
+                                    {this.state.board[2]}
+                                </h1>
+                            </td>
                         </tr>
                         <tr>
-                            <td onClick={this.handleSubmit} className="hori" id="3">{this.state.board[3]}</td>
-                            <td onClick={this.handleSubmit} className="vert hori" id="4">{this.state.board[4]}</td>
-                            <td onClick={this.handleSubmit} className="hori" id="5">{this.state.board[5]}</td>
+                            <td onClick={this.handleSubmit} className="hori" id="3">
+                                <h1>
+                                    {this.state.board[3]}
+                                </h1>
+                            </td>
+                            <td onClick={this.handleSubmit} className="vert hori" id="4">
+                                <h1>
+                                    {this.state.board[4]}
+                                </h1>
+                            </td>
+                            <td onClick={this.handleSubmit} className="hori" id="5">
+                                <h1>
+                                    {this.state.board[5]}
+                                </h1>
+                            </td>
                         </tr>
                         <tr>
-                            <td onClick={this.handleSubmit} id="6">{this.state.board[6]}</td>
-                            <td onClick={this.handleSubmit} id="7" className="vert">{this.state.board[7]}</td>
-                            <td onClick={this.handleSubmit} id="8">{this.state.board[8]}</td>
+                            <td onClick={this.handleSubmit} id="6">
+                                <h1>
+                                    {this.state.board[6]}
+                                </h1>
+                            </td>
+                            <td onClick={this.handleSubmit} id="7" className="vert">
+                                <h1>
+                                    {this.state.board[7]}
+                                </h1>
+                            </td>
+                            <td onClick={this.handleSubmit} id="8">
+                                <h1>
+                                    {this.state.board[8]}
+                                </h1>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
