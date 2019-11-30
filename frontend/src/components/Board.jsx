@@ -106,7 +106,8 @@ class Board extends Component {
         .then((res)=>{
             console.log(res);
         });
-        contract.methods.Move(Math.floor(event.target.id/3),event.target.id%3).send({from: sessionStorage.getItem('account'),gas:3000000})
+        let id = event.target.attributes.x.nodeValue;
+        contract.methods.Move(Math.floor(id/3),id%3).send({from: sessionStorage.getItem('account'),gas:3000000})
         .then(()=>{
             contract.methods.tostring(0,0).call({from: sessionStorage.getItem('account')})
             .then((res)=>{
@@ -185,52 +186,52 @@ class Board extends Component {
                     </thead>
                     <tbody>
                         <tr>
-                            <td onClick={this.handleSubmit} id="0">
-                                <h1>
+                            <td onClick={this.handleSubmit} x="0">
+                                <h1 id="0">
                                     {this.state.board[0]}
                                 </h1>
                             </td>
-                            <td onClick={this.handleSubmit} className="vert" id="1">
-                                <h1>
+                            <td onClick={this.handleSubmit} className="vert" x="1">
+                                <h1 id="1">
                                     {this.state.board[1]}
                                 </h1>
                             </td>
-                            <td onClick={this.handleSubmit} id="2">
-                                <h1>
+                            <td onClick={this.handleSubmit} x="2">
+                                <h1 id="2">
                                     {this.state.board[2]}
                                 </h1>
                             </td>
                         </tr>
                         <tr>
-                            <td onClick={this.handleSubmit} className="hori" id="3">
-                                <h1>
+                            <td onClick={this.handleSubmit} className="hori" x="3">
+                                <h1 id="3">
                                     {this.state.board[3]}
                                 </h1>
                             </td>
-                            <td onClick={this.handleSubmit} className="vert hori" id="4">
-                                <h1>
+                            <td onClick={this.handleSubmit} className="vert hori" x="4">
+                                <h1 id="4">
                                     {this.state.board[4]}
                                 </h1>
                             </td>
-                            <td onClick={this.handleSubmit} className="hori" id="5">
-                                <h1>
+                            <td onClick={this.handleSubmit} className="hori" x="5">
+                                <h1 id="5">
                                     {this.state.board[5]}
                                 </h1>
                             </td>
                         </tr>
                         <tr>
-                            <td onClick={this.handleSubmit} id="6">
-                                <h1>
+                            <td onClick={this.handleSubmit} x="6">
+                                <h1 id="6">
                                     {this.state.board[6]}
                                 </h1>
                             </td>
-                            <td onClick={this.handleSubmit} id="7" className="vert">
-                                <h1>
+                            <td onClick={this.handleSubmit} className="vert" x="7">
+                                <h1 id="7">
                                     {this.state.board[7]}
                                 </h1>
                             </td>
-                            <td onClick={this.handleSubmit} id="8">
-                                <h1>
+                            <td onClick={this.handleSubmit} x="8">
+                                <h1 id="8">
                                     {this.state.board[8]}
                                 </h1>
                             </td>
