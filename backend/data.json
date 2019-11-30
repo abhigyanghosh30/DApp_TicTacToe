@@ -311,6 +311,20 @@
             "type": "function"
         },
         {
+            "constant": true,
+            "inputs": [],
+            "name": "getGames",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
             "constant": false,
             "inputs": [],
             "name": "joinGame",
@@ -324,7 +338,48 @@
             "payable": false,
             "stateMutability": "nonpayable",
             "type": "constructor"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
+                    "name": "x",
+                    "type": "uint8"
+                },
+                {
+                    "indexed": false,
+                    "name": "y",
+                    "type": "uint8"
+                }
+            ],
+            "name": "boardUpdated",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
+                    "name": "message",
+                    "type": "string"
+                }
+            ],
+            "name": "gameOver",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [],
+            "name": "newGameStarted",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [],
+            "name": "playerJoined",
+            "type": "event"
         }
     ],
-    "contract_address": "0x8392D8D3d05D83Ca084DC841Ef3a34B1cfC42187"
+    "contract_address": "0x2EbA131431734aBDA21d6ce37d1d368D1EC16130"
 }

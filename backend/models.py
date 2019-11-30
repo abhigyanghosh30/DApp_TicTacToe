@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
 from flask import Flask
 import os
 
@@ -6,6 +7,7 @@ app = Flask(__name__)
 app.secret_key = os.urandom(67)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///games.db'
 db = SQLAlchemy(app)
+CORS(app)
 
 class Player(db.Model):
     __tablename__ = 'players'

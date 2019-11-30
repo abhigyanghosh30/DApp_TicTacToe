@@ -14,6 +14,11 @@ contract Tic {
     enum Board { Empty, X, O}
     Board[3][3] board;
     
+    event boardUpdated(uint8 x,uint8 y);
+    event gameOver(string message);
+    event newGameStarted();
+    event playerJoined();
+
     constructor() public  {
         // require(msg.value==1 ether);
         // p1 = msg.sender;
@@ -32,6 +37,7 @@ contract Tic {
         }
         
     }
+    
 
     function getCurrentTime() public view returns(uint){
         return now;
@@ -45,6 +51,10 @@ contract Tic {
         return(p1,p2);
     }
     
+    function getGames() public view returns(uint){
+        return games;
+    }
+
     function turn() public view returns(address) {
         if(games == 0 || games == 1)
         {
@@ -66,13 +76,14 @@ contract Tic {
         require(owner!= msg.sender);
         require( msg.value == 4 ether);
         require(cm==0);
-        if(p1==address(0x0))
+        if(p1==0x0)
             p1 = msg.sender;
-        else if(p2==address(0x0))
+        else if(p2==0x0)
         {
             require(p1!=msg.sender);
             p2 = msg.sender;
             timecounter = now + 10 minutes;
+            emit playerJoined();
         }
     }
     
@@ -91,7 +102,7 @@ contract Tic {
             }
         }
         timecounter = now + 10 minutes;
-        
+        emit newGameStarted();
     }
     
     //Printing the board
@@ -142,7 +153,7 @@ contract Tic {
     
     function Move(uint8 x, uint8 y) public
     {
-        require(cm<9);
+        // require(cm<9);
         require(InBounds(x,y));
         require(!over());
         require(turn()==msg.sender);
@@ -150,11 +161,14 @@ contract Tic {
         require(board[x][y]==Board.Empty);
         // require(!over());
         board[x][y] = player();
+        emit boardUpdated(x, y);
         cm+=1;
         timecounter = now + 10 minutes;
         
-        if(over())
+        if(over()){
             declareWinner();
+            emit gameOver("Game Over");
+        }
 
         //return (true,cm);
     
