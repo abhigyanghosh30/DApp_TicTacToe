@@ -33,7 +33,12 @@ class Board extends Component {
             let y = parseInt(event.returnValues['y']);
             contract.methods.tostring(x,y).call()
             .then((res)=>{
-                document.getElementById(x*3+y).innerHTML = res; 
+                try{
+                    document.getElementById(x*3+y).innerHTML = res;
+                }
+                catch(err){
+                    console.log(err);
+                } 
             });
 
         });
@@ -86,7 +91,12 @@ class Board extends Component {
             for(let j=0;j<3;j++){
                 contract.methods.tostring(i,j).call()
                 .then((res)=>{
-                    document.getElementById(i*3+j).innerHTML = res;
+                    try{
+                        document.getElementById(i*3+j).innerHTML = res;
+                    }
+                    catch(err){
+                        console.log(err);
+                    }
                 });
             }
         } 
